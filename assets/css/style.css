@@ -1,7 +1,25 @@
 body {
 	background-color: black;
+	border: 5px solid white;
 }
 
 div, h1 {
 	color: white;
+}
+
+h1 {
+	font-size: 150px;
+	text-align: center;
+}
+
+div {
+	font-size: 24px;
+	text-align: center;
+	border: 2px dotted white;
+	padding: 10px;
+}
+
+#box1, #box2 {
+	width: 300px;
+	margin-left: 800px;
 }
