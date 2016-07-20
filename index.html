@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hangman!</title>
+	<link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<h1>HANGMAN</h1>
+
+	<div>Press any key to get started!</div>
+
+	<div id="totalwins">Wins</div>
+
+	<div id="wordtarget">Current Word</div>
+
+	<div id="guesses">Number of Guesses Remaining</div>
+
+	<div id="userchose">Letters Already Guessed</div>
+
+<script type="text/javascript">
+	var options = ['dodgers','chargers','galaxy', 'lakers', 'clippers', 'angels', 'rams', 'kings', 'ducks', 'trojans', 'bruins'];
+
+	var winstotal = 0;
+
+	var correctGuess = 0;
+
+	var computerGuess = options[Math.floor(Math.random()*options.length)];
+
+	var letterreplace = [];
+	
+	for (i = 0; i < computerGuess.length; i++) {
+		letterreplace.push('_');
+	};
+
+	var targetDiv = document.getElementById("wordtarget");
+
+	var newDiv = document.createElement("div");
+	newDiv.innerHTML = letterreplace;
+	targetDiv.appendChild(newDiv);
+
+	var guessDiv = document.getElementById("guesses");
+
+	var guesses = 12;
+
+	var guessesDiv = document.createElement("div");
+	guessesDiv.innerHTML = guesses;
+	guessDiv.appendChild(guessesDiv);
+
+	var choseDiv = document.getElementById("userchose");
+
+	var userchose = [];
+	var chosenDiv = document.createElement("div");
+	chosenDiv.innerHTML = userchose;
+	choseDiv.appendChild(chosenDiv);
+	
+	var winsDiv = document.getElementById("totalwins");
+
+	var winssDiv = document.createElement("div");
+	winssDiv.innerHTML = winstotal;
+	winsDiv.appendChild(winssDiv);
+
+	function reset() {
+		correctGuess = 0;
+
+		computerGuess = options[Math.floor(Math.random()*options.length)];
+	
+		letterreplace.length = 0;
+	
+		for (i = 0; i < computerGuess.length; i++) {
+			letterreplace.push('_');
+		};
+
+		newDiv.innerHTML = letterreplace;
+
+		guesses = 12;
+		guessesDiv.innerHTML = guesses;
+
+		var choseDiv = document.getElementById("userchose");
+
+		userchose.length = 0;
+		chosenDiv.innerHTML = userchose;
+
+		winssDiv.innerHTML = winstotal;
+	};
+
+	document.onkeyup = function(event) {
+		var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+
+		for (i = 0; i < userchose.length; i++) {
+			if (userGuess === userchose[i]) {
+				return;
+			}
+		};
+
+		userchose.push(userGuess);
+
+		guesses--;
+		var RemainGuess = "<div>" + guesses + "</div>";
+		guessesDiv.innerHTML = RemainGuess;
+
+		var userDiv = "<div>" + userchose + "</div>";
+		chosenDiv.innerHTML = userDiv;
+			
+		for (i = 0; i < letterreplace.length; i++) {
+			if (userGuess === computerGuess[i]) {
+				letterreplace.splice(i, 1, userGuess);
+				newDiv.innerHTML = letterreplace;
+				guesses++;
+				var RemainGuess = "<div>" + guesses + "</div>";
+				guessesDiv.innerHTML = RemainGuess;
+				console.log(letterreplace);
+				correctGuess++;
+			}
+
+		};
+
+		if (correctGuess === letterreplace.length) {
+			alert("You won!")
+			winstotal++;
+			var RemainWin = "<div>" + winstotal + "</div>";
+			winssDiv.innerHTML = RemainWin;
+			reset();
+		};
+
+		if (guesses <= 0) {
+			alert("You lost!");
+			reset();
+		};
+			
+	};
+
+
+</script>
+</body>
+</html>
